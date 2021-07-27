@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="js/accounting.min.js"></script>
+    <title>Document</title>
+</head>
+<script>
+    $(document).on("click", "#clearBtn", function() {
+        location.reload();
+    });
+</script>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-size: 12px;
+        font-family: sans-serif;
+    }
+    #mainContainer {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+    #subContainer {
+        width: 80%;
+        height: 80%;
+        margin: auto;
+        margin-top: 100px;
+    }
+    #receiptTbl td, #receiptTbl th,
+    #chargedToTbl td, #chargedToTbl th,
+    #busStyleTbl td, #busStyleTbl th,
+    #dateTbl {
+        border: 1px solid black;
+        border-collapse: collapse;
+        height: 25px;
+        padding: 0 5px; 
+        white-space: nowrap;
+    }
+    #receiptContainer, #chargedToTbl {
+        width: 700px;
+        margin: auto;
+        margin-bottom: 2px;
+    }
+    #chargedToTbl td:first-child {
+        width: 359px;
+    }
+    #chargedToTbl td:nth-child(2) {
+        width: 121px;
+    }
+    #receiptTbl, #busStyleTbl {
+        width: 535px;
+        margin-bottom: 2px;
+        margin-right: 2px;
+    }
+    #busStyleTbl td {
+        width: 178px;
+    }
+    table {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 0;
+        margin: 0;
+    }
+    #receiptTbl tr {
+        height: 20px;
+    }
+    #receiptTbl th {
+        text-align: center;
+    }
+    #receiptTbl td:first-child, #receiptTbl td:nth-child(3) {
+        width: 76px;
+    }
+    #receiptTbl td:nth-child(2) {
+        width: 265px;
+    }
+    #receiptTbl td:last-child {
+        width: 120px;
+    }
+    td input[type="text"] {
+        width: 100%;
+        height: 100%;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+    #receiptTbl td:first-child input[type="text"], 
+    #receiptTbl td:nth-child(3) input[type="text"],
+    #receiptTbl td:last-child input[type="text"] {
+        text-align: right;
+    }
+    #fontInput {
+        width: 50%;
+    }
+    #salesTbl, #customerTbl {
+        width: 163px;
+    }
+    #customerTbl {
+        height:  91px;
+    }
+    #salesTbl {
+        height: 227px;
+    }
+    #customerTbl {
+        text-align:  center;
+    }
+    #salesTbl td:first-child {
+        width: 94px;
+    }
+    .filler {
+        height: 3px;
+    }
+    .totalLbl {
+        font-weight: bold;
+    }
+    #totalTblContainer {
+        font-size: 8px;
+    }
+    #totalTblContainer input[type="text"] {
+        font-size: 10px;
+    }
+    #header {
+        margin-bottom: 2px;
+    }
+    #dateTbl {
+        width: 336px;
+    }
+    #dateTbl td:first-child{
+        width: 38px;
+    }
+    #dateTbl td:nth-child(2){
+        width: 100px;
+    }
+
+    #dateTbl td:last-child {
+        width: 147px;
+        text-align: center;
+    }
+    .salesLbl {
+        height: 22px;
+    }
+    .vatLbl {
+        height: 10px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .vatInput {
+        font-size: 8px !important; 
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    #salesTbl input[type="text"] {
+        text-align: right;
+    }
+    @media print {
+        #receiptContainer {
+            position: absolute;
+            left: 10px;
+            top: 99px;
+        }
+        table {
+            border: none !important;
+        }
+        button {
+            visibility: hidden;
+        }
+        td input[type="text"] {
+            visibility: visible;
+        }
+        #receiptTbl td,#receiptTbl th,
+        #chargedToTbl td,#chargedToTbl th,
+        #busStyleTbl td, #busStyleTbl th,
+        #salesTbl td, #salesTbl th{
+            border: none;
+        }
+        #receiptTbl th,#chargedToTbl th,#busStyleTbl th,
+        .salesLbl, .vatLbl, #customerTbl,
+        #dateTbl td:first-child, #dateTbl td:nth-child(3), #dateTbl td:last-child {
+            visibility: hidden;
+        }
+        /* Adjust field widths here */
+        /* #receiptContainer, #chargedToTbl {
+            visibility: visible;
+            width: 400px;
+        }
+        #busStyleTbl {
+            visibility: visible;
+            width: 300px;
+        }
+        #salesTbl {
+            visibility: visible;
+            width: 100px;
+        }
+        #receiptTbl {
+            visibility: visible;
+            width: 300px;
+        }
+        #receiptTbl td:first-child {
+            width: 50px;
+        }
+        #receiptTbl td:nth-child(2) {
+            width: 150px;
+        }
+        #receiptTbl td:nth-child(3) {
+            width: 50px;
+        }
+        #receiptTbl td:last-child {
+            width: 50px;
+        }
+        #salesTbl span {
+            visibility: visible;
+        } */
+       
+    }
+</style>
+<body> 
+    <div id="mainContainer">
+        <div id="subContainer">
+            <div id="receiptContainer">
+                <div id="header" class="d-flex justify-content-between">
+                    <div id="headerDtlsContainer">
+                        <!-- TODO: Add receipt details here -->
+                    </div>
+                    <div>
+                        <table id="dateTbl">
+                            <tr>
+                                <td><span>Date</span></td>
+                                <td><input type="text" id="date"></td>
+                                <td><span>,20</span></td>
+                                <td><input type="text" id="year"></td>
+                                <td class="bg-dark text-white ">CHARGE INVOICE</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- Charged To -->
+                <table id="chargedToTbl">
+                    <tr>
+                        <th>CHARGED TO</th>
+                        <th>TIN</th>
+                        <th>ADDRESS</th>
+                    </tr>
+                    <tr>
+                        <td><span>HUAWEI TECHNOLOGIES PHILS. INC.</span></td>
+                        <td><span>221-237-211-000</span></td>
+                        <td><span>53rd F PBCOM TOWER, MAKATI CITY</span></td>
+                    </tr>
+                </table>
+                <div class="d-flex">
+                    <div>
+                        <table id="busStyleTbl">
+                            <tr>
+                                <th>BUSINESS STYLE</th>
+                                <th>OSCA / PWD NO.</th>
+                                <th>SIGNATURE</th>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <!-- Items -->
+                        <table id="receiptTbl">
+                            <tr>
+                                <th>Qty</th>
+                                <th>Articles / Description</th>
+                                <th>Unit Price</th>
+                                <th>Amount &#8369;</th>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                                <td><input type="text"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="totalTblContainer">
+                        <table id="salesTbl">
+                            <tr>
+                                <td class="salesLbl">
+                                    <span class="label">
+                                        TOTAL SALES <br>
+                                        (VAT INCLUSIVES)
+                                    </span>
+                                </td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td class="salesLbl">
+                                    <span class="label">
+                                        LESS 12% VAT
+                                    </span>
+                                </td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td class="salesLbl">
+                                    <span class="label">
+                                        NET OF VAT/TOTAL
+                                    </span>
+                                </td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td class="salesLbl">
+                                    <span class="label">
+                                       LESS SC/PWD DISC
+                                    </span>
+                                </td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td class="salesLbl">
+                                    <span class="label">
+                                        TOTAL DUE
+                                    </span>
+                                </td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td class="salesLbl">
+                                    <span class="label">
+                                        LESS WITHHOLDING
+                                    </span>
+                                </td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td class="salesLbl">
+                                    <span class="label totalLbl" >
+                                        TOTAL AMOUNT DUE
+                                    </span>
+                                </td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <!-- <tr><td colspan="2" class="filler"></td></tr>
+                            <tr><td colspan="2" class="filler"></td></tr>
+                            <tr><td colspan="2" class="filler"></td></tr> -->
+                            <tr>
+                                <td class="vatLbl">
+                                    <span class="label">
+                                        VATABLE (V)
+                                    </span>
+                                </td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr>
+                                <td class="vatLbl">
+                                    <span class="label">
+                                        VAT EXEMPT (E)
+                                    </span>
+                                </td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr>
+                                <td class="vatLbl">
+                                    <span class="label">
+                                        ZERO RATED (Z)
+                                    </span>
+                                </td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr>
+                                <td class="vatLbl">
+                                    <span class="label">
+                                        VAT (12%)
+                                    </span>
+                                </td>
+                                <td><span></span></td>
+                            </tr>
+                            <tr>
+                                <td class="vatLbl">
+                                    <span class="label totalLbl">
+                                        TOTAL
+                                    </span>
+                                </td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr><span></span></tr>
+                        </table>
+                        <table id="customerTbl">
+                            <tr>
+                                <td>[ ] CASH [ ] CHECK [ ] CREDIT</td>
+                            </tr>
+                            <tr>
+                                <td>CUSTOMER'S SIGNATURE</td>
+                            </tr>
+                            <tr>
+                                <td>CASHIER / AUTHORIZED PERSON</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <br>
+                <button type="button" class="btn btn-outline-primary" onclick="window.print()">
+                    <svg width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                        <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+                        <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                    </svg>
+                </button>
+                <button id="clearBtn" type="button" class="btn btn-outline-danger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
